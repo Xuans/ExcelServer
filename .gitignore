@@ -74,3 +74,9 @@ typings/
 
 # FuseBox cache
 .fusebox/
+
+#Apple
+.DS_Store
+
+~$.*
+Data/~$角色表.xlsx
