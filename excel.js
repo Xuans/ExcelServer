@@ -20,17 +20,20 @@ router.get('/excel/get', async (ctx, next) => {
                 message: '读取文件超时'
             }), CONFIG.TIMEOUT);
 
-            const content = await excel(filepath);
+            let content = await excel(filepath);
 
             if (filter && content && content.constructor == Array) {
                 try {
                     let _content = [];
                     for (let i = 0; i < content.length; i++) {
-                        let x = eval(`(${filter})(${content[i]},${i})`);
+                        let param=JSON.stringify(content[i]);
+                        console.log(`(${filter})(${param},${i})`);
+                        let x = eval(`(${filter})(${param},${i})`);
                         if (x != false) {
                             _content.push(x);
                         }
                     }
+                    content=_content;
                 } catch (e) {
                     console.error(e);
                 }
