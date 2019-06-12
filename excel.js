@@ -26,16 +26,20 @@ router.get('/excel/get', async (ctx, next) => {
                 try {
                     let _content = [];
                     for (let i = 0; i < content.length; i++) {
-                        let param=JSON.stringify(content[i]);
-                        console.log(`(${filter})(${param},${i})`);
+                        let param = JSON.stringify(content[i]);
+                        console.log(`(${filter})(${param},${i})`)
                         let x = eval(`(${filter})(${param},${i})`);
                         if (x != false) {
                             _content.push(x);
                         }
                     }
-                    content=_content;
+                    content = _content;
                 } catch (e) {
                     console.error(e);
+                    Result.error(ctx, {
+                        message: e.toString(),
+                    });
+                    return;
                 }
             }
 
@@ -44,7 +48,6 @@ router.get('/excel/get', async (ctx, next) => {
             Result.success(ctx, {
                 content
             });
-
 
         } else {
             Result.error(ctx, {
