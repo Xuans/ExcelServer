@@ -65,4 +65,23 @@ router.post('/excel/post', async (ctx, next) => {
     })
 })
 
+/**
+ * 轮询查询 获取随机数组
+ * number:数组长度
+ * max:最大值
+ * min:最小值
+ */
+router.get('/excel/poll',async (ctx, next) =>{
+    let data = new Array(parseInt(ctx.query.number));
+    let max = ctx.query.max? parseInt(ctx.query.max):100;
+    let min = ctx.query.min? parseInt(ctx.query.min):0;
+    for(let i=0; i<data.length ; i++){
+        data[i] = parseInt(Math.random()*(max-min+1)+min,10);
+    }
+    console.log(data)
+    Result.success(ctx, {
+        content: data
+    })
+})
+
 module.exports = router;
